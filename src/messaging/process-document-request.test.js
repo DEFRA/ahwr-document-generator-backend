@@ -34,7 +34,7 @@ describe('processDocumentRequest', () => {
       processDocumentRequest(
         mockLogger,
         {
-          body
+          ...body
         },
         mockDb
       )
@@ -55,7 +55,7 @@ describe('processDocumentRequest', () => {
     await processDocumentRequest(
       mockLogger,
       {
-        body
+        ...body
       },
       mockDb
     )

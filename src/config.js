@@ -8,6 +8,7 @@ convict.addFormats(convictFormatWithValidator)
 
 const isProduction = process.env.NODE_ENV === 'production'
 const isTest = process.env.NODE_ENV === 'test'
+const usePrettyPrint = process.env.USE_PRETTY_PRINT === 'true'
 
 const config = convict({
   serviceVersion: {
@@ -122,7 +123,7 @@ const config = convict({
     format: {
       doc: 'Format to output logs in',
       format: ['ecs', 'pino-pretty'],
-      default: isProduction ? 'ecs' : 'pino-pretty',
+      default: usePrettyPrint ? 'pino-pretty' : 'ecs',
       env: 'LOG_FORMAT'
     },
     redact: {

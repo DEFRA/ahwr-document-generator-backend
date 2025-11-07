@@ -10,7 +10,8 @@ export const publishDocument = (logger, pdfDocGenerator, data, db) => {
     pdfDocGenerator.on('data', (chunk) => chunks.push(chunk))
 
     pdfDocGenerator.on('end', async () => {
-      const blob = await uploadBlob(logger, filename, chunks)
+      logger.info(`Document ${filename} generated`)
+      const blob = await uploadBlob(logger, filename, Buffer.concat(chunks))
       await createLogEntry(db, data, filename)
       resolve({ filename, blob })
     })

@@ -4,10 +4,6 @@ import { mockRequest } from '../../test/mocks/data'
 import { pageSizes } from './page-sizes'
 import moment from 'moment'
 
-jest.mock('../getDirName', () => ({
-  getDirName: () => 'dir/'
-}))
-
 const { A4 } = pageSizes
 
 describe('get document definition', () => {

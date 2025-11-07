@@ -1,16 +1,12 @@
 import { title } from './title.js'
 
-// jest.mock('../../getDirName', () => ({
-//   getDirName: () => 'dir/'
-// }))
-
 describe('title', () => {
   test('it builds an object to use in the page content using default scheme', () => {
     expect(title()).toEqual({
       stack: [
         {
           fit: [567, 70.875],
-          image: 'document/images/logo.jpg',
+          image: 'src/document/images/logo.jpg',
           link: 'test-uri',
           style: 'logo'
         },
@@ -28,7 +24,7 @@ describe('title', () => {
       stack: [
         {
           fit: [567, 70.875],
-          image: 'document/images/logo.jpg',
+          image: 'src/document/images/logo.jpg',
           link: 'test-uri',
           style: 'logo'
         },

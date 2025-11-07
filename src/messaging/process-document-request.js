@@ -3,20 +3,19 @@ import { validateDocumentRequest } from './document-request-schema.js'
 import { publishDocumentCreatedEvent } from './publish-document-created.js'
 
 export const processDocumentRequest = async (logger, message, db) => {
-  const messageBody = message.body
-  if (validateDocumentRequest(logger, messageBody)) {
+  if (validateDocumentRequest(logger, message)) {
     logger.setBindings({
-      reference: messageBody.reference,
-      sbi: messageBody.sbi,
-      crn: messageBody.crn,
-      userType: messageBody.userType
+      reference: message.reference,
+      sbi: message.sbi,
+      crn: message.crn,
+      userType: message.userType
     })
-    const { fileName } = await generateDocument(logger, messageBody, db)
+    const { fileName } = await generateDocument(logger, message, db)
     // Send outbound SNS request
-    await publishDocumentCreatedEvent(logger, messageBody, fileName)
+    await publishDocumentCreatedEvent(logger, message, fileName)
   } else {
     logger.error(
-      `Unable to complete document generation request as the request is invalid: ${JSON.stringify(messageBody)}`
+      `Unable to complete document generation request as the request is invalid: ${JSON.stringify(message)}`
     )
     throw new Error('Invalid document request')
   }
