@@ -10,8 +10,12 @@ import { failAction } from './common/helpers/fail-action.js'
 import { pulse } from './common/helpers/pulse.js'
 import { requestTracing } from './common/helpers/request-tracing.js'
 import { setupProxy } from './common/helpers/proxy/setup-proxy.js'
+import {
+  configureAndStart,
+  stopSubscriber
+} from './messaging/document-request-queue-subscriber.js'
 
-async function createServer() {
+export async function createServer() {
   setupProxy()
   const server = Hapi.server({
     host: config.get('host'),
@@ -58,7 +62,13 @@ async function createServer() {
     router
   ])
 
+  server.events.on('start', async () => {
+    await configureAndStart(server.db)
+  })
+
+  server.events.on('stop', async () => {
+    await stopSubscriber()
+  })
+
   return server
 }
-
-export { createServer }

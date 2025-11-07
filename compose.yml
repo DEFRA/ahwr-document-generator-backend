@@ -9,7 +9,7 @@ services:
     environment:
       DEBUG: ${DEBUG:-1}
       LS_LOG: WARN # Localstack DEBUG Level
-      SERVICES: s3,sqs,sns,firehose
+      SERVICES: s3,sqs,sns
       LOCALSTACK_HOST: 127.0.0.1
     volumes:
       - '${TMPDIR:-/tmp}/localstack:/var/lib/localstack'
@@ -42,29 +42,6 @@ services:
 
   ################################################################################
 
-  # frontend:
-  #   image: defradigital/frontend:${FRONTEND_VERSION:-latest}
-  #   ports:
-  #     - '3000:3000'
-  #   links:
-  #     - 'localstack:localstack'
-  #     - 'redis:redis'
-  #   depends_on:
-  #     localstack:
-  #       condition: service_healthy
-  #     redis:
-  #       condition: service_started
-  #   env_file:
-  #     - 'compose/aws.env'
-  #   environment:
-  #     PORT: 3000
-  #     NODE_ENV: development
-  #     REDIS_HOST: redis
-  #     LOCALSTACK_ENDPOINT: http://localstack:4566
-  #     USE_SINGLE_INSTANCE_CACHE: true
-  #   networks:
-  #     - cdp-tenant
-
   ahwr-document-generator-backend:
     build:
       context: .
@@ -84,8 +61,14 @@ services:
     environment:
       PORT: 3001
       NODE_ENV: development
-      LOCALSTACK_ENDPOINT: http://localstack:4566
+      AWS_ENDPOINT_URL: http://localstack:4566
       MONGO_URI: mongodb://mongodb:27017/
+      USE_PRETTY_PRINT: true
+      DOCUMENT_BUCKET_NAME: ahwr-documents
+      DOCUMENT_REQUEST_QUEUE_URL: "http://sqs.eu-west-2.127.0.0.1:4566/000000000000/ahwr_document_generator_queue"
+      DOCUMENT_CREATED_TOPIC_ARN: "arn:aws:sns:eu-west-2:000000000000:ahwr_document_created"
+      APPLY_SERVICE_URI: "http://localhost:3002/sign-in"
+      TERMS_AND_CONDITIONS_URL: "https://www.gov.uk/government/publications/get-funding-to-improve-animal-health-and-welfare-terms-and-conditions"
     networks:
       - cdp-tenant
     volumes:

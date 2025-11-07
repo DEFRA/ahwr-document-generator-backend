@@ -8,6 +8,7 @@ convict.addFormats(convictFormatWithValidator)
 
 const isProduction = process.env.NODE_ENV === 'production'
 const isTest = process.env.NODE_ENV === 'test'
+const usePrettyPrint = process.env.USE_PRETTY_PRINT === 'true'
 
 const config = convict({
   serviceVersion: {
@@ -33,6 +34,63 @@ const config = convict({
     doc: 'Api Service Name',
     format: String,
     default: 'ahwr-document-generator-backend'
+  },
+  termsAndConditionsUrl: {
+    doc: 'Url for terms and conditions',
+    format: String,
+    default: '#',
+    env: 'TERMS_AND_CONDITIONS_URL'
+  },
+  applyServiceUri: {
+    doc: 'Uri for apply service',
+    format: String,
+    default: 'test-uri',
+    env: 'APPLY_SERVICE_URI'
+  },
+  sqs: {
+    documentRequestQueueUrl: {
+      doc: 'URL of the SQS queue to receive document generation requests from',
+      format: String,
+      default: '#',
+      env: 'DOCUMENT_REQUEST_QUEUE_URL'
+    }
+  },
+  sns: {
+    documentCreatedTopicArn: {
+      doc: 'ARN of the topic to send document created events to',
+      format: String,
+      default: '#',
+      env: 'DOCUMENT_CREATED_TOPIC_ARN'
+    }
+  },
+  aws: {
+    region: {
+      doc: 'AWS region',
+      format: String,
+      default: 'eu-west-1',
+      env: 'AWS_REGION'
+    },
+    endpointUrl: {
+      doc: 'AWS endpoint URL',
+      format: String,
+      default: null,
+      nullable: true,
+      env: 'AWS_ENDPOINT_URL'
+    }
+  },
+  s3: {
+    bucketName: {
+      doc: 'Document S3 bucket name',
+      format: String,
+      default: 'eu-west-1',
+      env: 'DOCUMENT_BUCKET_NAME'
+    },
+    forcePathStyle: {
+      doc: 'Force path style on S3 bucket',
+      format: Boolean,
+      default: true,
+      env: 'FORCE_PATH_STYLE'
+    }
   },
   cdpEnvironment: {
     doc: 'The CDP environment the app is running in. With the addition of "local" for local development',
@@ -65,7 +123,7 @@ const config = convict({
     format: {
       doc: 'Format to output logs in',
       format: ['ecs', 'pino-pretty'],
-      default: isProduction ? 'ecs' : 'pino-pretty',
+      default: usePrettyPrint ? 'pino-pretty' : 'ecs',
       env: 'LOG_FORMAT'
     },
     redact: {

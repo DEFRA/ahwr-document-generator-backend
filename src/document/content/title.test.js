@@ -1,0 +1,39 @@
+import { title } from './title.js'
+
+describe('title', () => {
+  test('it builds an object to use in the page content using default scheme', () => {
+    expect(title()).toEqual({
+      stack: [
+        {
+          fit: [567, 70.875],
+          image: 'src/document/images/logo.jpg',
+          link: 'test-uri',
+          style: 'logo'
+        },
+        {
+          alignment: 'left',
+          style: 'header',
+          text: 'Agreement summary: get funding to improve animal health and welfare'
+        }
+      ]
+    })
+  })
+
+  test('it builds an object to use in the page content using specific scheme', () => {
+    expect(title('ahwr')).toEqual({
+      stack: [
+        {
+          fit: [567, 70.875],
+          image: 'src/document/images/logo.jpg',
+          link: 'test-uri',
+          style: 'logo'
+        },
+        {
+          alignment: 'left',
+          style: 'header',
+          text: 'Agreement summary: get funding to improve animal health and welfare'
+        }
+      ]
+    })
+  })
+})
