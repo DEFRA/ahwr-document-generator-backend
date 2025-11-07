@@ -17,7 +17,7 @@ jest.mock('aws-embedded-metrics', () => {
   }
 })
 jest.mock('./logging/logger.js', () => ({
-  createLogger: () => ({ error: (...args) => mockLoggerError(...args) })
+  getLogger: () => ({ error: (...args) => mockLoggerError(...args) })
 }))
 
 const mockMetricsName = 'mock-metrics-name'

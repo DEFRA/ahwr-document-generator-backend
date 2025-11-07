@@ -54,6 +54,14 @@ const config = convict({
       env: 'DOCUMENT_REQUEST_QUEUE_URL'
     }
   },
+  sns: {
+    documentCreatedTopicArn: {
+      doc: 'ARN of the topic to send document created events to',
+      format: String,
+      default: '#',
+      env: 'DOCUMENT_CREATED_TOPIC_ARN'
+    }
+  },
   aws: {
     region: {
       doc: 'AWS region',
