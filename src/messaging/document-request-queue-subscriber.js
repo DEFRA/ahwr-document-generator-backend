@@ -11,7 +11,8 @@ export async function configureAndStart(db) {
     logger: getLogger(),
     region: config.get('aws.region'),
     awsEndpointUrl: config.get('aws.endpointUrl'),
-    async onMessage(message) {
+    async onMessage(message, attributes) {
+      getLogger().info(attributes, 'Received incoming message')
       await processDocumentRequest(getLogger(), message, db)
     }
   })

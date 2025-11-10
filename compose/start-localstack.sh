@@ -85,4 +85,4 @@ awslocal sns list-topics
 echo "SNS/SQS ready"
 
 # Add an example message to the ahwr_document_request topic ready for processing from queue
-awslocal sns publish --topic-arn arn:aws:sns:eu-west-2:000000000000:ahwr_document_request --message '{"crn":"1101663919","reference":"IAHW-QE9R-KDSP","sbi":"106639701","startDate":"2025-07-16T14:27:19.841Z","userType":"newUser","email":"peterevansu@snavereteps.com.test","farmerName":"Peter Evans","name":"Oaklands Farm","orgEmail":"oaklandsfarmm@mrafsdnalkaok.com.test"}'
+awslocal sns publish --topic-arn arn:aws:sns:eu-west-2:000000000000:ahwr_document_request --message '{"crn":"1101663919","reference":"IAHW-QE9R-KDSP","sbi":"106639701","startDate":"2025-07-16T14:27:19.841Z","userType":"newUser","email":"peterevansu@snavereteps.com.test","farmerName":"Peter Evans","name":"Oaklands Farm","orgEmail":"oaklandsfarmm@mrafsdnalkaok.com.test"}' --message-attributes '{"messageType":{"DataType":"String","StringValue":"uk.gov.defra.ahwr.document.request"}}'

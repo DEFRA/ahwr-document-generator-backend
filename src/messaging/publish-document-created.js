@@ -28,7 +28,11 @@ export async function publishDocumentCreatedEvent(
     applicationReference: reference
   }
 
-  await publishMessage(documentCreatedEvent)
+  const attributes = {
+    eventType: 'uk.gov.ffc.ahwr.document.created'
+  }
+
+  await publishMessage(documentCreatedEvent, attributes)
 
   logger.info('Document created event published')
 }
