@@ -21,7 +21,7 @@
     "server:watch": "nodemon --inspect=0.0.0.0 --ext js,json --legacy-watch ./src",
     "setup:husky": "node -e \"try { (await import('husky')).default() } catch (e) { if (e.code !== 'ERR_MODULE_NOT_FOUND') throw e }\" --input-type module",
     "start": "NODE_ENV=production node --use-strict .",
-    "test": "jest --runInBand --forceExit",
+    "test": "jest --runInBand",
     "test:watch": "TZ=UTC vitest"
   },
   "author": "Defra DDTS",
@@ -38,7 +38,7 @@
     "aws4": "1.13.2",
     "convict": "6.2.4",
     "convict-format-with-validator": "6.2.0",
-    "ffc-ahwr-common-library": "3.1.1",
+    "ffc-ahwr-common-library": "3.2.0",
     "global-agent": "3.0.0",
     "hapi-pino": "12.1.0",
     "hapi-pulse": "3.0.1",

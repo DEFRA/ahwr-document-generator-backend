@@ -24,13 +24,16 @@ describe('publishDocumentCreated', () => {
     )
 
     expect(setupClient).toHaveBeenCalledTimes(1)
-    expect(publishMessage).toHaveBeenCalledWith({
-      applicationReference: 'ABC123',
-      crn: '1234567890',
-      documentLocation: 'sbi123/ABC123.pdf',
-      sbi: 'sbi123',
-      userType: 'farmer'
-    })
+    expect(publishMessage).toHaveBeenCalledWith(
+      {
+        applicationReference: 'ABC123',
+        crn: '1234567890',
+        documentLocation: 'sbi123/ABC123.pdf',
+        sbi: 'sbi123',
+        userType: 'farmer'
+      },
+      { eventType: 'uk.gov.ffc.ahwr.document.created' }
+    )
   })
   test('skips setting up client and then publishes event on subsequent call', async () => {
     await publishDocumentCreatedEvent(
@@ -45,12 +48,15 @@ describe('publishDocumentCreated', () => {
     )
 
     expect(setupClient).toHaveBeenCalledTimes(0)
-    expect(publishMessage).toHaveBeenCalledWith({
-      applicationReference: 'ABC123',
-      crn: '1234567890',
-      documentLocation: 'sbi123/ABC123.pdf',
-      sbi: 'sbi123',
-      userType: 'farmer'
-    })
+    expect(publishMessage).toHaveBeenCalledWith(
+      {
+        applicationReference: 'ABC123',
+        crn: '1234567890',
+        documentLocation: 'sbi123/ABC123.pdf',
+        sbi: 'sbi123',
+        userType: 'farmer'
+      },
+      { eventType: 'uk.gov.ffc.ahwr.document.created' }
+    )
   })
 })
