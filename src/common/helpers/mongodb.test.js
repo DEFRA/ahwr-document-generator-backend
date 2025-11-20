@@ -28,9 +28,6 @@ describe('#mongoDb', () => {
 
   describe('Set up', () => {
     beforeAll(async () => {
-      // Dynamic import needed due to config being updated by vitest-mongodb
-      // const { createServer } = await import('../../server.js')
-
       server = await createServer()
       await server.initialize()
     })
@@ -56,6 +53,15 @@ describe('#mongoDb', () => {
 
     test('Should close Mongo client on server stop', async () => {
       const closeSpy = jest.spyOn(server.mongoClient, 'close')
+      await server.stop({ timeout: 1000 })
+
+      expect(closeSpy).toHaveBeenCalledWith(true)
+    })
+
+    test('Should catch error thrown whilst closing Mongo client', async () => {
+      const closeSpy = jest
+        .spyOn(server.mongoClient, 'close')
+        .mockRejectedValueOnce('could not close')
       await server.stop({ timeout: 1000 })
 
       expect(closeSpy).toHaveBeenCalledWith(true)

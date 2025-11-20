@@ -1,0 +1,29 @@
+import { startServer } from '../../../src/common/helpers/start-server.js'
+import { configureAndStart } from '../../../src/messaging/document-request-queue-subscriber.js'
+
+jest.mock('../../../src/messaging/document-request-queue-subscriber.js')
+
+describe('health endpoint test', () => {
+  let server
+
+  beforeEach(async () => {
+    configureAndStart.mockResolvedValueOnce()
+    server = await startServer()
+  })
+
+  test('GET /health route returns 200', async () => {
+    const options = {
+      method: 'GET',
+      url: '/health'
+    }
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+  })
+
+  afterEach(async () => {
+    if (server) {
+      await server.stop()
+    }
+    jest.clearAllMocks()
+  })
+})

@@ -10,8 +10,7 @@ export const title = (scheme = 'default') => {
 
 const generateDefaultTitle = () => {
   const applyServiceUri = config.get('applyServiceUri')
-  const titleText =
-    'Agreement summary: get funding to improve animal health and welfare'
+  const titleText = 'Agreement summary: get funding to improve animal health and welfare'
 
   return [
     {

@@ -6,7 +6,7 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/test-output/',
-    '<rootDir>/tests/',
+    '<rootDir>/test/',
     '<rootDir>/jest.config.cjs'
   ],
   modulePathIgnorePatterns: ['node_modules'],
@@ -26,8 +26,8 @@ module.exports = {
   testPathIgnorePatterns: [],
   verbose: true,
   // setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
-  // globalSetup: './tests/globalSetup.js',
-  // globalTeardown: './tests/globalTeardown.js',
+  globalSetup: './test/globalSetup.js',
+  globalTeardown: './test/globalTeardown.js',
   transform: {
     '^.+\\.[j]sx?$': 'babel-jest'
   },

@@ -10,10 +10,7 @@ import { failAction } from './common/helpers/fail-action.js'
 import { pulse } from './common/helpers/pulse.js'
 import { requestTracing } from './common/helpers/request-tracing.js'
 import { setupProxy } from './common/helpers/proxy/setup-proxy.js'
-import {
-  configureAndStart,
-  stopSubscriber
-} from './messaging/document-request-queue-subscriber.js'
+import { configureAndStart, stopSubscriber } from './messaging/document-request-queue-subscriber.js'
 
 export async function createServer() {
   setupProxy()
