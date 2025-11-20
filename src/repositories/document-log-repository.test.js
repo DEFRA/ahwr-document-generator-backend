@@ -42,7 +42,7 @@ describe('document log repository', () => {
       await redactPII(mockDb, agreementReference, mockLogger)
 
       expect(mockDb.updateOne).toHaveBeenCalledWith(
-        { agreementReference: 'AHWR-123' },
+        { reference: 'AHWR-123' },
         {
           $set: {
             'inputData.name': 'REDACTED_NAME',

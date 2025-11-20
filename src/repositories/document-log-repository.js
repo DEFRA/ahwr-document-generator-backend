@@ -18,7 +18,7 @@ export const createLogEntry = async (db, data, fileName) => {
 
 export const redactPII = async (db, agreementReference, logger) => {
   const result = await db.collection(COLLECTION).updateOne(
-    { agreementReference },
+    { reference: agreementReference },
     {
       $set: {
         'inputData.name': REDACT_PII_VALUES.REDACTED_NAME,
