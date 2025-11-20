@@ -50,10 +50,7 @@ export const deleteBlob = async (filename, logger) => {
 
     return true
   } catch (err) {
-    logger.error(
-      { err },
-      `Unable to delete document: ${bucketName}/${filename}`
-    )
+    logger.error({ err }, `Unable to delete document: ${bucketName}/${filename}`)
     throw err
   }
 }

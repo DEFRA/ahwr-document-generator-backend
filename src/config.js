@@ -82,7 +82,7 @@ const config = convict({
     bucketName: {
       doc: 'Document S3 bucket name',
       format: String,
-      default: 'eu-west-1',
+      default: 'document-bucket',
       env: 'DOCUMENT_BUCKET_NAME'
     },
     forcePathStyle: {
@@ -94,16 +94,7 @@ const config = convict({
   },
   cdpEnvironment: {
     doc: 'The CDP environment the app is running in. With the addition of "local" for local development',
-    format: [
-      'local',
-      'infra-dev',
-      'management',
-      'dev',
-      'test',
-      'perf-test',
-      'ext-test',
-      'prod'
-    ],
+    format: ['local', 'infra-dev', 'management', 'dev', 'test', 'perf-test', 'ext-test', 'prod'],
     default: 'local',
     env: 'ENVIRONMENT'
   },
@@ -155,13 +146,7 @@ const config = convict({
       },
       readPreference: {
         doc: 'mongo read preference',
-        format: [
-          'primary',
-          'primaryPreferred',
-          'secondary',
-          'secondaryPreferred',
-          'nearest'
-        ],
+        format: ['primary', 'primaryPreferred', 'secondary', 'secondaryPreferred', 'nearest'],
         default: 'secondary'
       }
     }

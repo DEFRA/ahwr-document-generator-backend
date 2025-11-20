@@ -22,9 +22,7 @@ export const validateDocumentRequest = (logger, event) => {
   const validate = eventSchema.validate(event)
 
   if (validate.error) {
-    logger.error(
-      `Document request validation error: ${JSON.stringify(validate.error)}`
-    )
+    logger.error(`Document request validation error: ${JSON.stringify(validate.error)}`)
     return false
   }
 

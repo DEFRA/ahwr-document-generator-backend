@@ -62,11 +62,7 @@ describe('processDocumentRequest', () => {
 
     expect(validateDocumentRequest).toHaveBeenCalledWith(mockLogger, body)
     expect(generateDocument).toHaveBeenCalledWith(mockLogger, body, mockDb)
-    expect(publishDocumentCreatedEvent).toHaveBeenCalledWith(
-      mockLogger,
-      body,
-      'sbi123/ABC123.pdf'
-    )
+    expect(publishDocumentCreatedEvent).toHaveBeenCalledWith(mockLogger, body, 'sbi123/ABC123.pdf')
     expect(mockSetBindings).toHaveBeenCalledWith({
       reference: 'ABC123',
       sbi: 'sbi123',

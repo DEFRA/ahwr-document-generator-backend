@@ -9,10 +9,6 @@ export AWS_SECRET_ACCESS_KEY=test
 # S3 buckets
 aws --endpoint-url=http://localhost:4566 s3 mb s3://ahwr-documents
 
-# SQS queues
-#aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name my-queue
-
-
 function create_topic() {
   local topic_name=$1
   local topic_arn=$(awslocal sns create-topic --name $topic_name --query "TopicArn" --output text)

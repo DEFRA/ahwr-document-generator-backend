@@ -3,11 +3,7 @@ import { config } from '../config.js'
 import { getLogger } from '../common/helpers/logging/logger.js'
 
 let clientConfigured
-export async function publishDocumentCreatedEvent(
-  logger,
-  messageBody,
-  fileName
-) {
+export async function publishDocumentCreatedEvent(logger, messageBody, fileName) {
   if (!clientConfigured) {
     setupClient(
       config.get('aws.region'),

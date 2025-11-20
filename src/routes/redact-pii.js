@@ -15,11 +15,7 @@ export const redactPiiRequestHandlers = [
             `${agreementToRedact.sbi}/${agreementToRedact.reference}.pdf`,
             request.logger
           )
-          await redactPII(
-            request.db,
-            agreementToRedact.reference,
-            request.logger
-          )
+          await redactPII(request.db, agreementToRedact.reference, request.logger)
         })
       )
 
