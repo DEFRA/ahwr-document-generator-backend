@@ -10,9 +10,9 @@ export const processDocumentRequest = async (logger, message, db) => {
       crn: message.crn,
       userType: message.userType
     })
-    const { fileName } = await generateDocument(logger, message, db)
+    const { filename } = await generateDocument(logger, message, db)
     // Send outbound SNS request
-    await publishDocumentCreatedEvent(logger, message, fileName)
+    await publishDocumentCreatedEvent(logger, message, filename)
   } else {
     logger.error(
       `Unable to complete document generation request as the request is invalid: ${JSON.stringify(message)}`

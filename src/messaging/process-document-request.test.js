@@ -51,7 +51,7 @@ describe('processDocumentRequest', () => {
 
   test('valid request calls through to process document and send out created event', async () => {
     validateDocumentRequest.mockReturnValue(true)
-    generateDocument.mockReturnValueOnce({ fileName: 'sbi123/ABC123.pdf' })
+    generateDocument.mockReturnValueOnce({ filename: 'sbi123/ABC123.pdf' })
     await processDocumentRequest(
       mockLogger,
       {
