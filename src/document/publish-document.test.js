@@ -52,6 +52,14 @@ describe('publishDocument', () => {
     const result = await promise
 
     expect(logger.info).toHaveBeenCalledWith(`Document ${filename} generated`)
+    expect(logger.info).toHaveBeenCalledWith({
+      event: {
+        type: 'document-generated',
+        reference: `ref: ${data.reference}, sbi: ${data.sbi}`,
+        kind: data.userType,
+        category: data.scheme
+      }
+    })
     expect(uploadBlob).toHaveBeenCalledWith(logger, filename, buffer)
     expect(createLogEntry).toHaveBeenCalledWith(db, data, filename)
     expect(result).toEqual({ filename, blob: blobResult })

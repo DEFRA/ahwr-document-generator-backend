@@ -2,10 +2,12 @@ import { generateDocument } from '../document/index.js'
 import { validateDocumentRequest } from './document-request-schema.js'
 import { publishDocumentCreatedEvent } from './publish-document-created.js'
 import { processDocumentRequest } from './process-document-request.js'
+import { metricsCounter } from '../common/helpers/metrics.js'
 
 jest.mock('../document/index.js')
 jest.mock('./document-request-schema.js')
 jest.mock('./publish-document-created.js')
+jest.mock('../common/helpers/metrics.js')
 
 const mockSetBindings = jest.fn()
 const mockLoggerError = jest.fn()
@@ -47,6 +49,8 @@ describe('processDocumentRequest', () => {
     expect(mockLoggerError).toHaveBeenCalledWith(
       `Unable to complete document generation request as the request is invalid: ${JSON.stringify(body)}`
     )
+    expect(metricsCounter).toHaveBeenCalledWith('inbound-process-document-request-received')
+    expect(metricsCounter).not.toHaveBeenCalledWith('inbound-process-document-request-valid')
   })
 
   test('valid request calls through to process document and send out created event', async () => {
@@ -69,5 +73,7 @@ describe('processDocumentRequest', () => {
       crn: '1234567890',
       userType: 'farmer'
     })
+    expect(metricsCounter).toHaveBeenCalledWith('inbound-process-document-request-received')
+    expect(metricsCounter).toHaveBeenCalledWith('inbound-process-document-request-valid')
   })
 })

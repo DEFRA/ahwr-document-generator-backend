@@ -19,10 +19,23 @@ const eventSchema = joi.object({
 })
 
 export const validateDocumentRequest = (logger, event) => {
-  const validate = eventSchema.validate(event)
-
-  if (validate.error) {
-    logger.error(`Document request validation error: ${JSON.stringify(validate.error)}`)
+  const { error } = eventSchema.validate(event, {
+    abortEarly: false
+  })
+  if (error) {
+    logger.error(
+      {
+        error,
+        event: {
+          type: 'exception',
+          severity: 'error',
+          category: 'fail-validation',
+          kind: 'inbound-document-request-validation',
+          reason: JSON.stringify(error.details)
+        }
+      },
+      'Document request validation error'
+    )
     return false
   }
 

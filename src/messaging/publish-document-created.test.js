@@ -1,7 +1,10 @@
 import { publishDocumentCreatedEvent } from './publish-document-created.js'
 import { publishMessage, setupClient } from 'ffc-ahwr-common-library'
+import { metricsCounter } from '../common/helpers/metrics.js'
 
 jest.mock('ffc-ahwr-common-library')
+jest.mock('../common/helpers/metrics.js')
+
 const mockLogger = {
   info: jest.fn(),
   error: jest.fn(),
@@ -58,5 +61,6 @@ describe('publishDocumentCreated', () => {
       },
       { eventType: 'uk.gov.ffc.ahwr.document.created' }
     )
+    expect(metricsCounter).toHaveBeenCalledWith('outbound-document-created-event-published')
   })
 })
