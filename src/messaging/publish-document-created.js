@@ -1,6 +1,7 @@
 import { publishMessage, setupClient } from 'ffc-ahwr-common-library'
 import { config } from '../config.js'
 import { getLogger } from '../common/helpers/logging/logger.js'
+import { metricsCounter } from '../common/helpers/metrics.js'
 
 let clientConfigured
 export async function publishDocumentCreatedEvent(logger, messageBody, fileName) {
@@ -31,4 +32,5 @@ export async function publishDocumentCreatedEvent(logger, messageBody, fileName)
   await publishMessage(documentCreatedEvent, attributes)
 
   logger.info('Document created event published')
+  await metricsCounter('outbound-document-created-event-published')
 }
