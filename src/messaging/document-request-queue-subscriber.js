@@ -7,12 +7,13 @@ let documentRequestSubscriber
 
 export async function configureAndStart(db) {
   const onMessage = async (message, attributes) => {
-    getLogger().info(attributes, 'Received incoming message')
-    await processDocumentRequest(getLogger(), message, db)
+    const logger = getLogger().child({})
+    logger.info(attributes, 'Received incoming message')
+    await processDocumentRequest(logger, message, db)
   }
   documentRequestSubscriber = new SqsSubscriber({
     queueUrl: config.get('sqs.documentRequestQueueUrl'),
-    logger: getLogger(),
+    logger: getLogger().child({}),
     region: config.get('aws.region'),
     awsEndpointUrl: config.get('aws.endpointUrl'),
     onMessage
