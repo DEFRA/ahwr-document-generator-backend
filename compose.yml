@@ -2,8 +2,8 @@ services:
   localstack:
     image: localstack/localstack:3.0.2
     ports:
-      - '4566:4566' # LocalStack Gateway
-      - '4510-4559:4510-4559' # external services port range
+      - '4568:4566' # LocalStack Gateway
+      - '4710-4759:4710-4759' # external services port range
     env_file:
       - 'compose/aws.env'
     environment:
@@ -11,6 +11,8 @@ services:
       LS_LOG: WARN # Localstack DEBUG Level
       SERVICES: s3,sqs,sns
       LOCALSTACK_HOST: 127.0.0.1
+      EXTERNAL_SERVICE_PORTS_START: 4710
+      EXTERNAL_SERVICE_PORTS_END: 4759
     volumes:
       - '${TMPDIR:-/tmp}/localstack:/var/lib/localstack'
       - ./compose/start-localstack.sh:/etc/localstack/init/ready.d/start-localstack.sh
@@ -23,7 +25,7 @@ services:
       - cdp-tenant
 
   mongodb:
-    image: mongo:6.0.13
+    image: mongo:7.0.24
     networks:
       - cdp-tenant
     ports:
@@ -39,7 +41,7 @@ services:
       context: .
       target: development
     ports:
-      - '3001:3001'
+      - '3008:3001'
     links:
       - 'localstack:localstack'
       - 'mongodb:mongodb'
