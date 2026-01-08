@@ -28,7 +28,6 @@ export const validateDocumentRequest = (logger, event) => {
         error,
         event: {
           type: 'exception',
-          severity: 'error',
           category: 'fail-validation',
           kind: 'inbound-document-request-validation',
           reason: JSON.stringify(error.details)
