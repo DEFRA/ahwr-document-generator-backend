@@ -40,3 +40,12 @@ export const redactPII = async (db, agreementReference, logger) => {
     logger.info(`No message documents updated for agreementReference: ${agreementReference}`)
   }
 }
+
+export const getLogEntriesByAgreementRef = (db, agreementReference) => {
+  return db
+    .collection(COLLECTION)
+    .find({
+      reference: agreementReference
+    })
+    .toArray()
+}
