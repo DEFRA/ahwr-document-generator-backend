@@ -1,11 +1,21 @@
-import { createLogEntry, redactPII } from './document-log-repository.js'
+import {
+  createLogEntry,
+  redactPII,
+  getLogEntriesByAgreementRef
+} from './document-log-repository.js'
+import { ObjectId } from 'mongodb'
 
 describe('document log repository', () => {
+  const mockToArray = jest.fn()
   const mockDb = {
     collection: jest.fn().mockReturnThis(),
     insertOne: jest.fn(),
-    updateOne: jest.fn()
+    updateOne: jest.fn(),
+    find: jest.fn(() => ({
+      toArray: mockToArray
+    }))
   }
+
   test('it saves new data to the DB', async () => {
     const testData = {
       id: 'test-id-1',
@@ -68,6 +78,47 @@ describe('document log repository', () => {
       expect(mockLogger.info).toHaveBeenCalledWith(
         `No message documents updated for agreementReference: ${agreementReference}`
       )
+    })
+  })
+
+  describe('getLogEntriesByAgreementRef', () => {
+    const logEntry = {
+      _id: new ObjectId('69779c620fd96e6088b56a5b'),
+      reference: 'IAHW-QE9R-KDSP',
+      createdAt: new Date('2026-01-26T16:54:58.765Z'),
+      updatedAt: new Date('2026-01-26T16:54:58.765Z'),
+      fileName: '106639701/IAHW-QE9R-KDSP.pdf',
+      status: 'document-generated',
+      inputData: {
+        crn: '1101663919',
+        reference: 'IAHW-QE9R-KDSP',
+        sbi: '106639701',
+        startDate: '2025-07-16T14:27:19.841Z',
+        userType: 'newUser',
+        email: 'peterevansu@snavereteps.com.test',
+        farmerName: 'Peter Evans',
+        name: 'Oaklands Farm',
+        orgEmail: 'oaklandsfarmm@mrafsdnalkaok.com.test'
+      }
+    }
+
+    test('should return log entries when the agreement reference matches', async () => {
+      mockToArray.mockResolvedValueOnce([logEntry])
+
+      const result = await getLogEntriesByAgreementRef(mockDb, 'IAHW-ABC1-1060')
+
+      expect(mockDb.find).toHaveBeenCalledWith({
+        reference: 'IAHW-ABC1-1060'
+      })
+      expect(result).toEqual([logEntry])
+    })
+
+    test('should return emptry array if no result is found', async () => {
+      mockToArray.mockResolvedValueOnce([])
+
+      const result = await getLogEntriesByAgreementRef(mockDb, 'IAHW-ABC1-1060')
+
+      expect(result).toEqual([])
     })
   })
 })
