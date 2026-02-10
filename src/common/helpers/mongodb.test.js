@@ -1,4 +1,6 @@
 import { createServer } from '../../server.js'
+import { createDocumentLogIndexes } from '../../repositories/document-log-repository.js'
+
 const mockCreateIndex = jest.fn()
 const mockCollection = jest.fn(() => {
   return {
@@ -12,6 +14,7 @@ const mockDb = jest.fn((databaseName) => {
     namespace: databaseName
   }
 })
+jest.mock('../../repositories/document-log-repository.js')
 
 jest.mock('mongodb', () => ({
   ...jest.requireActual('mongodb'),
@@ -34,6 +37,7 @@ describe('#mongoDb', () => {
 
     test('Server should have expected MongoDb decorators', () => {
       expect(server.db).toEqual(mockDb('ahwr-document-generator-backend'))
+      expect(createDocumentLogIndexes).toHaveBeenCalled()
     })
 
     test('MongoDb should have expected database name', () => {

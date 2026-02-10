@@ -4,6 +4,12 @@ import { REDACT_PII_VALUES } from 'ffc-ahwr-common-library'
 
 const COLLECTION = 'documentlog'
 
+export const createDocumentLogIndexes = async (db) => {
+  await db.collection(COLLECTION).createIndex({
+    reference: 1
+  })
+}
+
 export const createLogEntry = async (db, data, fileName) => {
   const { reference } = data
   return db.collection(COLLECTION).insertOne({
