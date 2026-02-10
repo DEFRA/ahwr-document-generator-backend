@@ -1,7 +1,8 @@
 import {
   createLogEntry,
   redactPII,
-  getLogEntriesByAgreementRef
+  getLogEntriesByAgreementRef,
+  createDocumentLogIndexes
 } from './document-log-repository.js'
 import { ObjectId } from 'mongodb'
 
@@ -119,6 +120,22 @@ describe('document log repository', () => {
       const result = await getLogEntriesByAgreementRef(mockDb, 'IAHW-ABC1-1060')
 
       expect(result).toEqual([])
+    })
+  })
+
+  describe('createDocumentLogIndexes', () => {
+    const mockCollection = {
+      createIndex: jest.fn()
+    }
+    const mockDb = {
+      collection: jest.fn(() => mockCollection)
+    }
+
+    it('should create indexes', async () => {
+      await createDocumentLogIndexes(mockDb)
+
+      expect(mockDb.collection).toHaveBeenCalledWith('documentlog')
+      expect(mockCollection.createIndex).toHaveBeenCalledWith({ reference: 1 })
     })
   })
 })
