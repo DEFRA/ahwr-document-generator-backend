@@ -1,6 +1,6 @@
 # ahwr-document-generator-backend
 
-Core delivery platform Node.js Backend Template.
+Created from the Core delivery platform Node.js Backend Template.
 
 - [Requirements](#requirements)
   - [Node.js](#nodejs)
@@ -25,6 +25,18 @@ Core delivery platform Node.js Backend Template.
   - [SonarCloud](#sonarcloud)
 - [Licence](#licence)
   - [About the licence](#about-the-licence)
+
+# Service Purpose
+
+This service is responsible for generating PDF agreement documents to be stored in an S3 bucket and later send out
+to users.
+
+# Service features
+
+- Listens to an SQS queue for messages containing details of events that should trigger document generation
+- Saves an audit to the database of the request
+- Generates a PDF document based on the message details and uploads it to an S3 bucket
+- Emits a notification that document has been created for interested parties
 
 ## Requirements
 
@@ -58,20 +70,18 @@ To run the application in `development` mode run:
 npm run dev
 ```
 
+OR to run dockerised to mimic the production environment more closely run:
+
+```bash
+./scripts/start
+```
+
 ### Testing
 
 To test the application run:
 
 ```bash
 npm run test
-```
-
-### Production
-
-To mimic the application running in `production` mode locally run:
-
-```bash
-npm start
 ```
 
 ### Npm scripts
@@ -106,11 +116,11 @@ git config --global core.autocrlf false
 
 ## API endpoints
 
-| Endpoint             | Description                    |
-| :------------------- | :----------------------------- |
-| `GET: /health`       | Health                         |
-| `GET: /example    `  | Example API (remove as needed) |
-| `GET: /example/<id>` | Example API (remove as needed) |
+| Endpoint                          | Description                                                                             |
+| :-------------------------------- | :-------------------------------------------------------------------------------------- |
+| `GET: /health`                    | Health                                                                                  |
+| `POST: /api/redact/pii`           | Request redaction of PII data in database for a given reference                         |
+| `GET: /api/support/document-logs` | Request a view of the stored database entry for document requests for a given reference |
 
 ## Development helpers
 
@@ -213,11 +223,9 @@ docker run -e PORT=3001 -p 3001:3001 ahwr-document-generator-backend
 
 A local environment with:
 
-- Localstack for AWS services (S3, SQS)
-- Redis
+- Localstack for AWS services (S3, SQS, SNS)
 - MongoDB
 - This service.
-- A commented out frontend example.
 
 ```bash
 docker compose up --build -d
@@ -230,7 +238,8 @@ the [.github/example.dependabot.yml](.github/example.dependabot.yml) to `.github
 
 ### SonarCloud
 
-Instructions for setting up SonarCloud can be found in [sonar-project.properties](./sonar-project.properties)
+Sonarcloud is configured for this repository. All pull requests will be analysed and the results can be seen in the
+SonarCloud dashboard for this repository. See [Sonarcloud](https://sonarcloud.io/project/overview?id=DEFRA_ahwr-document-generator-backend) for details.
 
 ## Licence
 
