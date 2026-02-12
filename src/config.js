@@ -47,6 +47,22 @@ const config = convict({
     default: 'test-uri',
     env: 'APPLY_SERVICE_URI'
   },
+  apiKeys: {
+    backofficeUi: {
+      doc: 'API key to allow backoffice API access',
+      format: String,
+      default: 'not-set',
+      sensitive: true,
+      env: 'BACKOFFICE_UI_API_KEY'
+    },
+    applicationBackEnd: {
+      doc: 'API key to allow application backend API access',
+      format: String,
+      default: 'not-set',
+      sensitive: true,
+      env: 'APPLICATION_BACKEND_API_KEY'
+    }
+  },
   sqs: {
     documentRequestQueueUrl: {
       doc: 'URL of the SQS queue to receive document generation requests from',

@@ -11,6 +11,7 @@ import { pulse } from './common/helpers/pulse.js'
 import { requestTracing } from './common/helpers/request-tracing.js'
 import { setupProxy } from './common/helpers/proxy/setup-proxy.js'
 import { configureAndStart, stopSubscriber } from './messaging/document-request-queue-subscriber.js'
+import { authPlugin } from './plugins/auth.js'
 
 export async function createServer() {
   setupProxy()
@@ -56,6 +57,7 @@ export async function createServer() {
       plugin: mongoDb,
       options: config.get('mongo')
     },
+    authPlugin,
     router
   ])
 
