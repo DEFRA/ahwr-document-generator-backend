@@ -1,5 +1,6 @@
 import joi from 'joi'
-import { SUPPORTED_SCHEMES } from 'ffc-ahwr-common-library'
+// import { SUPPORTED_SCHEMES } from 'ffc-ahwr-common-library' //note this should be updated to include extra scheme in library
+import { SUPPORTED_SCHEMES } from '../constants.js'
 
 const eventSchema = joi.object({
   reference: joi.string().required(),
