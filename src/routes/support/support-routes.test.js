@@ -1,7 +1,8 @@
 import { Server } from '@hapi/hapi'
 import { supportRoutes } from './support-routes.js'
-import { getDocumentLogsHandler } from './support-controller.js'
+import { getDocumentLogsHandler, supportQueueMessagesHandler } from './support-controller.js'
 import { ObjectId } from 'mongodb'
+import { StatusCodes } from 'http-status-codes'
 
 jest.mock('./support-controller.js')
 
@@ -55,20 +56,37 @@ describe('support-routes', () => {
       expect(res.result).toEqual(documentLogs)
       expect(getDocumentLogsHandler).toHaveBeenCalledTimes(1)
     })
+
+    it('should return 400 when query is missing required params', async () => {
+      const res = await server.inject({
+        method: 'GET',
+        url: '/api/support/document-logs'
+      })
+
+      expect(res.statusCode).toBe(400)
+      expect(res.result).toEqual({
+        error: 'Bad Request',
+        message: 'Invalid request query input',
+        statusCode: 400
+      })
+      expect(getDocumentLogsHandler).not.toHaveBeenCalled()
+    })
   })
 
-  it('should return 400 when query is missing required params', async () => {
-    const res = await server.inject({
-      method: 'GET',
-      url: '/api/support/document-logs'
-    })
+  describe('GET /api/support/queue-messages', () => {
+    it('should validate request and call correct handler', async () => {
+      supportQueueMessagesHandler.mockImplementation(async (_, h) => {
+        return h.response().code(StatusCodes.OK)
+      })
 
-    expect(res.statusCode).toBe(400)
-    expect(res.result).toEqual({
-      error: 'Bad Request',
-      message: 'Invalid request query input',
-      statusCode: 400
+      const res = await server.inject({
+        method: 'GET',
+        url: '/api/support/queue-messages?queueUrl=localhost:4566/queue-url&limit=10',
+        headers: { 'x-api-key': 'not-set' }
+      })
+
+      expect(res.statusCode).toBe(StatusCodes.OK)
+      expect(supportQueueMessagesHandler).toHaveBeenCalledTimes(1)
     })
-    expect(getDocumentLogsHandler).not.toHaveBeenCalled()
   })
 })
