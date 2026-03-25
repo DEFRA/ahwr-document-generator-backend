@@ -1,16 +1,34 @@
 import { config } from '../../config.js'
 import { millimetresToPoints } from '../conversion.js'
-import { AHWR_SCHEME } from 'ffc-ahwr-common-library'
+import { AHWR_SCHEME, POULTRY_SCHEME } from 'ffc-ahwr-common-library'
 
 export const title = (scheme = 'default') => {
   return {
-    stack: titleMap.get(scheme)()
+    stack: generateTitle(scheme)
   }
 }
 
-const generateDefaultTitle = () => {
+const defaultTitle = {
+  text: 'Agreement summary: get funding to improve animal health and welfare',
+  style: 'header',
+  alignment: 'left'
+}
+
+const poultryTitle = {
+  ...defaultTitle,
+  text: 'Agreement summary: Poultry biosecurity review',
+  fontSize: 22
+}
+
+const titleByScheme = new Map([
+  ['default', defaultTitle],
+  [AHWR_SCHEME, defaultTitle],
+  [POULTRY_SCHEME, poultryTitle]
+])
+
+const generateTitle = (scheme) => {
   const applyServiceUri = config.get('applyServiceUri')
-  const titleText = 'Agreement summary: get funding to improve animal health and welfare'
+  const title = titleByScheme.get(scheme)
 
   return [
     {
@@ -19,11 +37,6 @@ const generateDefaultTitle = () => {
       style: 'logo',
       link: applyServiceUri
     },
-    { text: titleText, style: 'header', alignment: 'left' }
+    title
   ]
 }
-
-const titleMap = new Map([
-  ['default', generateDefaultTitle],
-  [AHWR_SCHEME, generateDefaultTitle]
-])
