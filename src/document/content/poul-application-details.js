@@ -1,6 +1,46 @@
 import moment from 'moment'
 import { config } from '../../config.js'
 
+const TEXT_MARGIN = [0, 10, 0, 10]
+const LIST_ITEM_MARGIN = [15, 0, 0, 5]
+
+const createTable = (data) => ({
+  body: [
+    [
+      { text: 'Agreement number:', margin: TEXT_MARGIN },
+      { text: `${data.reference}`, margin: TEXT_MARGIN }
+    ],
+    [
+      { text: 'Agreement holder:', margin: TEXT_MARGIN },
+      { text: `${data.name} - ${data.sbi}`, margin: TEXT_MARGIN }
+    ],
+    [
+      { text: 'Agreement start date:', margin: TEXT_MARGIN },
+      {
+        text: `${moment(data.startDate).format('D MMMM YYYY')}`,
+        margin: TEXT_MARGIN
+      }
+    ],
+    [
+      {
+        text: 'Review deadline:',
+        margin: TEXT_MARGIN
+      },
+      {
+        text: '31 March 2029. You must do all your reviews by this date.',
+        margin: TEXT_MARGIN
+      }
+    ],
+    [
+      { text: 'Claims deadline:', margin: TEXT_MARGIN },
+      {
+        text: '31 March 2029. You must submit all your claims by this date.',
+        margin: TEXT_MARGIN
+      }
+    ]
+  ]
+})
+
 export const poulApplicationDetails = (data) => {
   const termsAndConditionsUrl = config.get('termsAndConditionsUrl')
 
@@ -32,42 +72,7 @@ export const poulApplicationDetails = (data) => {
       },
       { text: 'Agreement details', style: 'subheader', margin: [0, 20, 0, 7] },
       {
-        table: {
-          body: [
-            [
-              { text: 'Agreement number:', margin: [0, 10, 0, 10] },
-              { text: `${data.reference}`, margin: [0, 10, 0, 10] }
-            ],
-            [
-              { text: 'Agreement holder:', margin: [0, 10, 0, 10] },
-              { text: `${data.name} - ${data.sbi}`, margin: [0, 10, 0, 10] }
-            ],
-            [
-              { text: 'Agreement start date:', margin: [0, 10, 0, 10] },
-              {
-                text: `${moment(data.startDate).format('D MMMM YYYY')}`,
-                margin: [0, 10, 0, 10]
-              }
-            ],
-            [
-              {
-                text: 'Review deadline:',
-                margin: [0, 10, 0, 10]
-              },
-              {
-                text: '31 March 2029. You must do all your reviews by this date.',
-                margin: [0, 10, 0, 10]
-              }
-            ],
-            [
-              { text: 'Claims deadline:', margin: [0, 10, 0, 10] },
-              {
-                text: '31 March 2029. You must submit all your claims by this date.',
-                margin: [0, 10, 0, 10]
-              }
-            ]
-          ]
-        },
+        table: createTable(data),
         layout: {
           hLineWidth: function (i, node) {
             return i === 0 || i === node.table.body.length ? 0 : 1
@@ -96,7 +101,7 @@ export const poulApplicationDetails = (data) => {
               },
               ' each time you do a review'
             ],
-            margin: [15, 0, 0, 5]
+            margin: LIST_ITEM_MARGIN
           },
           {
             text: [
@@ -108,7 +113,7 @@ export const poulApplicationDetails = (data) => {
                 color: '#1D70B8'
               }
             ],
-            margin: [15, 0, 0, 0]
+            margin: LIST_ITEM_MARGIN
           }
         ]
       },
@@ -120,7 +125,7 @@ export const poulApplicationDetails = (data) => {
             link: 'https://www.gov.uk/government/collections/funding-to-improve-animal-health-and-welfare-guidance-for-farmers-and-vets',
             decoration: 'underline',
             color: '#1D70B8',
-            margin: [15, 0, 0, 0]
+            margin: LIST_ITEM_MARGIN
           }
         ]
       }
