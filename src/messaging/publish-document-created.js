@@ -20,7 +20,7 @@ export async function publishDocumentCreatedEvent(logger, messageBody, fileName)
   const documentCreatedEvent = {
     crn,
     sbi,
-    userType,
+    userType, //user type not valid any more. Replace with scheme?
     documentLocation: fileName,
     applicationReference: reference
   }
