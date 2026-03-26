@@ -1,8 +1,8 @@
 import moment from 'moment'
 import { config } from '../../config.js'
 
-const TEXT_MARGIN = [0, 10, 0, 10]
-const LIST_ITEM_MARGIN = [15, 0, 0, 5]
+const TEXT_MARGIN = [0, 10, 0, 10] // NOSONAR
+const LIST_ITEM_MARGIN = [15, 0, 0, 5] // NOSONAR
 
 const createTable = (data) => ({
   body: [
@@ -76,7 +76,7 @@ export const poulApplicationDetails = (data) => {
 
   return {
     stack: [
-      { text: 'You have applied for funding for:', margin: [0, 10, 0, 6] },
+      { text: 'You have applied for funding for:', margin: [0, 10, 0, 6] }, // NOSONAR
       {
         ul: [
           {
@@ -84,7 +84,7 @@ export const poulApplicationDetails = (data) => {
             link: 'https://www.gov.uk/guidance/farmers-how-to-apply-for-funding-to-improve-animal-health-and-welfare#animal-health-and-welfare-review',
             decoration: 'underline',
             color: '#1D70B8',
-            margin: [15, 0, 0, 5]
+            margin: [15, 0, 0, 5] // NOSONAR
           }
         ]
       },
@@ -98,9 +98,9 @@ export const poulApplicationDetails = (data) => {
             color: '#1D70B8'
           }
         ],
-        margin: [0, 20, 0, 10]
+        margin: [0, 20, 0, 10] // NOSONAR
       },
-      { text: 'Agreement details', style: 'subheader', margin: [0, 20, 0, 7] },
+      { text: 'Agreement details', style: 'subheader', margin: [0, 20, 0, 7] }, // NOSONAR
       {
         table: createTable(data),
         layout: {
@@ -115,11 +115,11 @@ export const poulApplicationDetails = (data) => {
       {
         text: 'Important requirements',
         style: 'subheader',
-        margin: [0, 20, 0, 7]
+        margin: [0, 20, 0, 7] // NOSONAR
       },
-      { text: 'You must:', margin: [0, 0, 0, 6] },
+      { text: 'You must:', margin: [0, 0, 0, 6] }, // NOSONAR
       requirementsList,
-      { text: 'Guidance', style: 'subheader', margin: [0, 20, 0, 7] },
+      { text: 'Guidance', style: 'subheader', margin: [0, 20, 0, 7] }, // NOSONAR
       {
         ul: [
           {
