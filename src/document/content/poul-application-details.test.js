@@ -81,7 +81,7 @@ describe('poulApplicationDetails', () => {
       reference: 'POUL-QE9R-KDSP',
       name: 'Sam Smith',
       sbi: '444555666',
-      startDate: '2022-06-01'
+      startDate: '2024-01-01'
     }
 
     const result = poulApplicationDetails(data)
@@ -93,5 +93,29 @@ describe('poulApplicationDetails', () => {
     expect(texts).toContain('Agreement details')
     expect(texts).toContain('Important requirements')
     expect(texts).toContain('Guidance')
+  })
+
+  it('should apply correct horizontal line widths', () => {
+    const data = {
+      reference: 'POUL-QE9R-KDSP',
+      name: 'Sam Smith',
+      sbi: '444555666',
+      startDate: '2024-01-01'
+    }
+
+    const result = poulApplicationDetails(data)
+
+    const tableBlock = result.stack.find((item) => item.table)
+    const { hLineWidth } = tableBlock.layout
+
+    const mockNode = {
+      table: {
+        body: new Array(5)
+      }
+    }
+
+    expect(hLineWidth(0, mockNode)).toBe(0)
+    expect(hLineWidth(5, mockNode)).toBe(0)
+    expect(hLineWidth(2, mockNode)).toBe(1)
   })
 })
