@@ -41,6 +41,36 @@ const createTable = (data) => ({
   ]
 })
 
+const requirementsList = {
+  ul: [
+    {
+      text: [
+        'have the ',
+        {
+          text: 'minimum number of poultry per unit',
+          link: 'https://www.gov.uk/guidance/farmers-how-to-apply-for-funding-to-improve-animal-health-and-welfare#who-can-get-funding',
+          decoration: 'underline',
+          color: '#1D70B8'
+        },
+        ' each time you do a review'
+      ],
+      margin: LIST_ITEM_MARGIN
+    },
+    {
+      text: [
+        'follow the rules for ',
+        {
+          text: 'timing of reviews',
+          link: 'https://www.gov.uk/guidance/farmers-how-to-apply-for-funding-to-improve-animal-health-and-welfare#timing-of-reviews-and-follow-ups',
+          decoration: 'underline',
+          color: '#1D70B8'
+        }
+      ],
+      margin: LIST_ITEM_MARGIN
+    }
+  ]
+}
+
 export const poulApplicationDetails = (data) => {
   const termsAndConditionsUrl = config.get('termsAndConditionsUrl')
 
@@ -88,35 +118,7 @@ export const poulApplicationDetails = (data) => {
         margin: [0, 20, 0, 7]
       },
       { text: 'You must:', margin: [0, 0, 0, 6] },
-      {
-        ul: [
-          {
-            text: [
-              'have the ',
-              {
-                text: 'minimum number of poultry per unit',
-                link: 'https://www.gov.uk/guidance/farmers-how-to-apply-for-funding-to-improve-animal-health-and-welfare#who-can-get-funding',
-                decoration: 'underline',
-                color: '#1D70B8'
-              },
-              ' each time you do a review'
-            ],
-            margin: LIST_ITEM_MARGIN
-          },
-          {
-            text: [
-              'follow the rules for ',
-              {
-                text: 'timing of reviews',
-                link: 'https://www.gov.uk/guidance/farmers-how-to-apply-for-funding-to-improve-animal-health-and-welfare#timing-of-reviews-and-follow-ups',
-                decoration: 'underline',
-                color: '#1D70B8'
-              }
-            ],
-            margin: LIST_ITEM_MARGIN
-          }
-        ]
-      },
+      requirementsList,
       { text: 'Guidance', style: 'subheader', margin: [0, 20, 0, 7] },
       {
         ul: [
