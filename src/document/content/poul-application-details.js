@@ -1,9 +1,9 @@
 import moment from 'moment'
 import { config } from '../../config.js'
 
-const termsAndConditionsUrl = config.get('termsAndConditionsUrl')
-
 export const poulApplicationDetails = (data) => {
+  const termsAndConditionsUrl = config.get('termsAndConditionsUrl')
+
   return {
     stack: [
       { text: 'You have applied for funding for:', margin: [0, 10, 0, 6] },
