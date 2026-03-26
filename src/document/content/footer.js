@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { AHWR_SCHEME } from 'ffc-ahwr-common-library'
+import { AHWR_SCHEME, POULTRY_SCHEME } from 'ffc-ahwr-common-library'
 
 export const footer = (reference, scheme = 'default') => {
   return {
@@ -17,5 +17,6 @@ const generateDefaultFooter = (reference) => {
 }
 const footerMap = new Map([
   ['default', generateDefaultFooter],
-  [AHWR_SCHEME, generateDefaultFooter]
+  [AHWR_SCHEME, generateDefaultFooter],
+  [POULTRY_SCHEME, generateDefaultFooter]
 ])

@@ -14,9 +14,21 @@ describe('footer', () => {
     })
   })
 
-  test('builds an object to use in for the page footer content, using specific scheme', () => {
+  test('builds an object to use in for the page footer content, using ahwr scheme', () => {
     const reference = '12345'
     expect(footer(reference, 'ahwr')).toEqual({
+      stack: [
+        {
+          text: `Date Generated: ${moment(new Date()).format('DD/MM/YYYY')}    Application Reference: ${reference}    Application Status: Agreement Offered`,
+          style: 'footer'
+        }
+      ]
+    })
+  })
+
+  test('builds an object to use in for the page footer content, using poultry scheme', () => {
+    const reference = '12345'
+    expect(footer(reference, 'poul')).toEqual({
       stack: [
         {
           text: `Date Generated: ${moment(new Date()).format('DD/MM/YYYY')}    Application Reference: ${reference}    Application Status: Agreement Offered`,
