@@ -1,2 +1,2 @@
 pre-commit run --all-files
-npm run git:pre-commit-hook
+npm run format:check && npm run lint && npm test
