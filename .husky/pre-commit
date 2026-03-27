@@ -1,2 +1,2 @@
 pre-commit run --all-files
-npm run format:check && npm run lint
+lint-staged
