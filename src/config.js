@@ -41,6 +41,12 @@ const config = convict({
     default: '#',
     env: 'TERMS_AND_CONDITIONS_URL'
   },
+  poultryTermsAndConditionsUrl: {
+    doc: 'Url for poultry terms and conditions',
+    format: String,
+    default: '#',
+    env: 'POULTRY_TERMS_AND_CONDITIONS_URL'
+  },
   applyServiceUri: {
     doc: 'Uri for apply service',
     format: String,

@@ -49,7 +49,7 @@ describe('title', () => {
         {
           alignment: 'left',
           style: 'header',
-          text: 'Agreement summary: Poultry biosecurity review',
+          text: 'Agreement summary: Poultry Biosecurity Review',
           fontSize: 22
         }
       ]

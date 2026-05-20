@@ -3,6 +3,10 @@ import { config } from '../../config.js'
 
 const TEXT_MARGIN = [0, 10, 0, 10] // NOSONAR
 const LIST_ITEM_MARGIN = [15, 0, 0, 5] // NOSONAR
+const LINK_COLOR = '#1D70B8'
+const LINK_DECORATION = 'underline'
+const GUIDANCE_URL =
+  'https://www.gov.uk/guidance/poultry-biosecurity-review-funding-guidance-for-poultry-keepers-and-vets'
 
 const createTable = (data) => ({
   body: [
@@ -22,19 +26,16 @@ const createTable = (data) => ({
       }
     ],
     [
+      { text: 'Reviews deadline:', margin: TEXT_MARGIN },
       {
-        text: 'Review deadline:',
-        margin: TEXT_MARGIN
-      },
-      {
-        text: '31 March 2029. You must do all your reviews by this date.',
+        text: 'All reviews must be complete by 31 December 2028',
         margin: TEXT_MARGIN
       }
     ],
     [
       { text: 'Claims deadline:', margin: TEXT_MARGIN },
       {
-        text: '31 March 2029. You must submit all your claims by this date.',
+        text: 'You must submit all claims by 31 March 2029',
         margin: TEXT_MARGIN
       }
     ]
@@ -44,49 +45,33 @@ const createTable = (data) => ({
 const requirementsList = {
   ul: [
     {
-      text: [
-        'have the ',
-        {
-          text: 'minimum number of poultry per unit',
-          link: 'https://www.gov.uk/guidance/farmers-how-to-apply-for-funding-to-improve-animal-health-and-welfare#who-can-get-funding',
-          decoration: 'underline',
-          color: '#1D70B8'
-        },
-        ' each time you do a review'
-      ],
+      text: 'the minimum number of poultry held on each site',
       margin: LIST_ITEM_MARGIN
     },
     {
-      text: [
-        'follow the rules for ',
-        {
-          text: 'timing of reviews',
-          link: 'https://www.gov.uk/guidance/farmers-how-to-apply-for-funding-to-improve-animal-health-and-welfare#timing-of-reviews-and-follow-ups',
-          decoration: 'underline',
-          color: '#1D70B8'
-        }
-      ],
+      text: 'the timing of reviews',
       margin: LIST_ITEM_MARGIN
     }
   ]
 }
 
 export const poulApplicationDetails = (data) => {
-  const termsAndConditionsUrl = config.get('termsAndConditionsUrl')
+  const termsAndConditionsUrl = config.get('poultryTermsAndConditionsUrl')
 
   return {
     stack: [
-      { text: 'You have applied for funding for:', margin: [0, 10, 0, 6] }, // NOSONAR
       {
-        ul: [
+        text: [
+          'You have applied for ',
           {
-            text: 'Poultry biosecurity review',
-            link: 'https://www.gov.uk/guidance/farmers-how-to-apply-for-funding-to-improve-animal-health-and-welfare#animal-health-and-welfare-review',
-            decoration: 'underline',
-            color: '#1D70B8',
-            margin: [15, 0, 0, 5] // NOSONAR
-          }
-        ]
+            text: 'Poultry Biosecurity Review',
+            link: GUIDANCE_URL,
+            decoration: LINK_DECORATION,
+            color: LINK_COLOR
+          },
+          ' funding.'
+        ],
+        margin: [0, 10, 0, 6] // NOSONAR
       },
       {
         text: [
@@ -94,8 +79,8 @@ export const poulApplicationDetails = (data) => {
           {
             text: 'terms and conditions.',
             link: termsAndConditionsUrl,
-            decoration: 'underline',
-            color: '#1D70B8'
+            decoration: LINK_DECORATION,
+            color: LINK_COLOR
           }
         ],
         margin: [0, 20, 0, 10] // NOSONAR
@@ -117,20 +102,20 @@ export const poulApplicationDetails = (data) => {
         style: 'subheader',
         margin: [0, 20, 0, 7] // NOSONAR
       },
-      { text: 'You must:', margin: [0, 0, 0, 6] }, // NOSONAR
-      requirementsList,
-      { text: 'Guidance', style: 'subheader', margin: [0, 20, 0, 7] }, // NOSONAR
       {
-        ul: [
+        text: [
+          'You must follow ',
           {
-            text: 'Poultry biosecurity review',
-            link: 'https://www.gov.uk/government/collections/funding-to-improve-animal-health-and-welfare-guidance-for-farmers-and-vets',
-            decoration: 'underline',
-            color: '#1D70B8',
-            margin: LIST_ITEM_MARGIN
-          }
-        ]
-      }
+            text: 'the guidance',
+            link: GUIDANCE_URL,
+            decoration: LINK_DECORATION,
+            color: LINK_COLOR
+          },
+          ' for:'
+        ],
+        margin: [0, 0, 0, 6] // NOSONAR
+      },
+      requirementsList
     ]
   }
 }
