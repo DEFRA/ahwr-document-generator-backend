@@ -38,6 +38,28 @@ to users.
 - Generates a PDF document based on the message details and uploads it to an S3 bucket
 - Emits a notification that document has been created for interested parties
 
+# Architecture
+
+```mermaid
+  architecture-beta
+      group cdp(cloud)[Core Delivery Platform]
+
+      service upstream(internet)[Application Service] in cdp
+      service svc(server)[Document Service] in cdp
+      service sqs(disk)[SQS request queue] in cdp
+      service s3(disk)[S3 document bucket] in cdp
+      service sns(disk)[SNS created topic] in cdp
+      service mongo(database)[MongoDB] in cdp
+      service downstream(internet)[Downstream consumers]
+
+      upstream:R --> L:sqs
+      sqs:R --> L:svc
+      svc:R --> L:s3
+      svc:B --> T:mongo
+      svc:T --> B:sns
+      sns:R --> L:downstream
+```
+
 ## Requirements
 
 ### pre-commit
