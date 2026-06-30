@@ -2,13 +2,16 @@
 
 Created from the Core delivery platform Node.js Backend Template.
 
+- [Service Purpose](#service-purpose)
+  - [Service features](#service-features)
+  - [Architecture](#architecture)
 - [Requirements](#requirements)
+  - [pre-commit](#pre-commit)
   - [Node.js](#nodejs)
 - [Local development](#local-development)
   - [Setup](#setup)
   - [Development](#development)
   - [Testing](#testing)
-  - [Production](#production)
   - [Npm scripts](#npm-scripts)
   - [Update dependencies](#update-dependencies)
   - [Formatting](#formatting)
@@ -16,7 +19,6 @@ Created from the Core delivery platform Node.js Backend Template.
 - [API endpoints](#api-endpoints)
 - [Development helpers](#development-helpers)
   - [MongoDB Locks](#mongodb-locks)
-  - [Proxy](#proxy)
 - [Docker](#docker)
   - [Development image](#development-image)
   - [Production image](#production-image)
@@ -31,12 +33,34 @@ Created from the Core delivery platform Node.js Backend Template.
 This service is responsible for generating PDF agreement documents to be stored in an S3 bucket and later send out
 to users.
 
-# Service features
+## Service features
 
 - Listens to an SQS queue for messages containing details of events that should trigger document generation
 - Saves an audit to the database of the request
 - Generates a PDF document based on the message details and uploads it to an S3 bucket
 - Emits a notification that document has been created for interested parties
+
+## Architecture
+
+```mermaid
+  architecture-beta
+      group cdp(cloud)[Core Delivery Platform]
+
+      service upstream(internet)[Application Service] in cdp
+      service svc(server)[Document Service] in cdp
+      service sqs(disk)[SQS request queue] in cdp
+      service s3(disk)[S3 document bucket] in cdp
+      service sns(disk)[SNS created topic] in cdp
+      service mongo(database)[MongoDB] in cdp
+      service downstream(internet)[Downstream consumers]
+
+      upstream:R --> L:sqs
+      sqs:R --> L:svc
+      svc:R --> L:s3
+      svc:B --> T:mongo
+      svc:T --> B:sns
+      sns:R --> L:downstream
+```
 
 ## Requirements
 
@@ -170,28 +194,6 @@ async function doStuff(server) {
 ```
 
 Helper methods are also available in `/src/helpers/mongo-lock.js`.
-
-### Proxy
-
-We are using forward-proxy which is set up by default. To make use of this: `import { fetch } from 'undici'` then
-because of the `setGlobalDispatcher(new ProxyAgent(proxyUrl))` calls will use the ProxyAgent Dispatcher
-
-If you are not using Wreck, Axios or Undici or a similar http that uses `Request`. Then you may have to provide the
-proxy dispatcher:
-
-To add the dispatcher to your own client:
-
-```javascript
-import { ProxyAgent } from 'undici'
-
-return await fetch(url, {
-  dispatcher: new ProxyAgent({
-    uri: proxyUrl,
-    keepAliveTimeout: 10,
-    keepAliveMaxTimeout: 10
-  })
-})
-```
 
 ## Docker
 
