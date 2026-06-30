@@ -16,7 +16,6 @@ Created from the Core delivery platform Node.js Backend Template.
 - [API endpoints](#api-endpoints)
 - [Development helpers](#development-helpers)
   - [MongoDB Locks](#mongodb-locks)
-  - [Proxy](#proxy)
 - [Docker](#docker)
   - [Development image](#development-image)
   - [Production image](#production-image)
