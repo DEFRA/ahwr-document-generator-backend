@@ -2,13 +2,16 @@
 
 Created from the Core delivery platform Node.js Backend Template.
 
+- [Service Purpose](#service-purpose)
+  - [Service features](#service-features)
+  - [Architecture](#architecture)
 - [Requirements](#requirements)
+  - [pre-commit](#pre-commit)
   - [Node.js](#nodejs)
 - [Local development](#local-development)
   - [Setup](#setup)
   - [Development](#development)
   - [Testing](#testing)
-  - [Production](#production)
   - [Npm scripts](#npm-scripts)
   - [Update dependencies](#update-dependencies)
   - [Formatting](#formatting)
@@ -30,14 +33,14 @@ Created from the Core delivery platform Node.js Backend Template.
 This service is responsible for generating PDF agreement documents to be stored in an S3 bucket and later send out
 to users.
 
-# Service features
+## Service features
 
 - Listens to an SQS queue for messages containing details of events that should trigger document generation
 - Saves an audit to the database of the request
 - Generates a PDF document based on the message details and uploads it to an S3 bucket
 - Emits a notification that document has been created for interested parties
 
-# Architecture
+## Architecture
 
 ```mermaid
   architecture-beta
