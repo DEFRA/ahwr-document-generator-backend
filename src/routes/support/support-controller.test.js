@@ -83,7 +83,7 @@ describe('getDocumentLogsHandler', () => {
       new Error('Failed to retrieve document logs by agreement reference')
     )
 
-    expect(
+    await expect(
       getDocumentLogsHandler({ ...request, query: { agreementReference: 'IAHW-ABC1-1061' } }, mockH)
     ).rejects.toThrow('Failed to retrieve document logs by agreement reference')
   })
@@ -93,7 +93,7 @@ describe('getDocumentLogsHandler', () => {
       Boom.badRequest('Failed to retrieve document logs by agreement reference')
     )
 
-    expect(
+    await expect(
       getDocumentLogsHandler({ ...request, query: { agreementReference: 'IAHW-ABC1-1061' } }, mockH)
     ).rejects.toThrow('Failed to retrieve document logs by agreement reference')
   })
