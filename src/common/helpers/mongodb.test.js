@@ -2,9 +2,11 @@ import { createServer } from '../../server.js'
 import { createDocumentLogIndexes } from '../../repositories/document-log-repository.js'
 
 const mockCreateIndex = jest.fn()
+const mockCreateIndexes = jest.fn()
 const mockCollection = jest.fn(() => {
   return {
-    createIndex: mockCreateIndex
+    createIndex: mockCreateIndex,
+    createIndexes: mockCreateIndexes
   }
 })
 const mockDb = jest.fn((databaseName) => {
