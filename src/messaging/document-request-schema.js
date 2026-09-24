@@ -4,7 +4,7 @@ import { SUPPORTED_SCHEMES } from 'ffc-ahwr-common-library'
 const eventSchema = joi.object({
   reference: joi.string().required(),
   sbi: joi.string().required(),
-  crn: joi.string().optional(),
+  crn: joi.string().required(),
   startDate: joi.date().required(),
   userType: joi.string().optional(),
   email: joi.string().email({ tlds: false }).optional(),
