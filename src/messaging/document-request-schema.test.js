@@ -63,4 +63,10 @@ describe('validate message body of the document request', () => {
     const validationResponse = validateDocumentRequest(mockLogger, endemicsDocumentRequest)
     expect(validationResponse).toBeFalsy()
   })
+
+  test('document request message is invalid and returns false - no crn', async () => {
+    endemicsDocumentRequest.crn = null
+    const validationResponse = validateDocumentRequest(mockLogger, endemicsDocumentRequest)
+    expect(validationResponse).toBeFalsy()
+  })
 })
